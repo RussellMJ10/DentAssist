@@ -1,0 +1,70 @@
+﻿@model DentAssistProyect.Models.Entities.PlanTratamiento
+
+@{
+    ViewData["Title"] = "Eliminar Plan de Tratamiento";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-danger text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 text-white"><i class="fas fa-file-medical-alt me-2"></i>Confirmar Eliminación de Plan</h4>
+                        <a asp-action="Index" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i> Volver
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>¿Está seguro que desea eliminar este plan de tratamiento?</h5>
+                        <p class="mb-0">Esta acción eliminará permanentemente el plan y todos los pasos asociados al mismo.</p>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th class="w-25 bg-light">@Html.DisplayNameFor(model => model.FechaCreacion)</th>
+                                    <td>@Html.DisplayFor(model => model.FechaCreacion)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">@Html.DisplayNameFor(model => model.Observaciones)</th>
+                                    <td>@Html.DisplayFor(model => model.Observaciones)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Paciente</th>
+                                    <td>@Html.DisplayFor(model => model.Paciente.Nombre)</td>
+                                </tr>
+                                <tr>
+                                    <th class="bg-light">Odontólogo</th>
+                                    <td>@Html.DisplayFor(model => model.Odontologo.Matricula) - @Html.DisplayFor(model => model.Odontologo.Nombre)</td>
+                                </tr>
+                                @if (ViewBag.PasosCount > 0)
+                                {
+                                    <tr class="table-warning">
+                                        <th class="bg-light">Pasos asociados</th>
+                                        <td>Este plan contiene @ViewBag.PasosCount pasos que también serán eliminados</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <form asp-action="Delete" class="mt-4">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-danger px-4">
+                                <i class="fas fa-trash-alt me-2"></i>Confirmar Eliminación
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

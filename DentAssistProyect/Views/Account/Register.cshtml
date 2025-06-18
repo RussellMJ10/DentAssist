@@ -1,0 +1,88 @@
+﻿@model DentAssistProyect.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<div class="row justify-content-center py-4">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-primary">
+            <div class="card-header bg-primary text-white py-3">
+                <h3 class="mb-0 text-center"><i class="fas fa-user-plus me-2"></i>Crear Nueva Cuenta</h3>
+            </div>
+            <div class="card-body p-4">
+                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <div class="mb-4">
+                        <label asp-for="Email" class="form-label small text-muted mb-2">
+                            <i class="fas fa-envelope me-2 text-primary"></i>CORREO ELECTRÓNICO
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-envelope text-muted"></i>
+                            </span>
+                            <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger small d-block mt-1 ps-4"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Password" class="form-label small text-muted mb-2">
+                            <i class="fas fa-lock me-2 text-primary"></i>CONTRASEÑA
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-lock text-muted"></i>
+                            </span>
+                            <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small d-block mt-1 ps-4"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="ConfirmPassword" class="form-label small text-muted mb-2">
+                            <i class="fas fa-check-circle me-2 text-primary"></i>CONFIRMAR CONTRASEÑA
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-lock text-muted"></i>
+                            </span>
+                            <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                        </div>
+                        <span asp-validation-for="ConfirmPassword" class="text-danger small d-block mt-1 ps-4"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Role" class="form-label small text-muted mb-2">
+                            <i class="fas fa-user-tag me-2 text-primary"></i>ROL
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light">
+                                <i class="fas fa-user-cog text-muted"></i>
+                            </span>
+                            <select asp-for="Role" class="form-select" aria-required="true">
+                                <option value="" disabled selected>Selecciona un rol</option>
+                                <option value="Administrador">Administrador</option>
+                                <option value="Recepcionista">Recepcionista</option>
+                                <option value="Odontologo">Odontólogo</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Role" class="text-danger small d-block mt-1 ps-4"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button id="registerSubmit" type="submit" class="btn btn-primary py-2">
+                            <i class="fas fa-user-plus me-2"></i> Registrar Cuenta
+                        </button>
+                    </div>
+
+                    <div class="mt-4 text-center small text-muted">
+                        ¿Ya tienes una cuenta? <a href="/Account/Login" class="text-primary fw-bold">Inicia sesión</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

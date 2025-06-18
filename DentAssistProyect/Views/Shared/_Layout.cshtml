@@ -1,0 +1,151 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DentAssistProyect</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DentAssistProyect.styles.css" asp-append-version="true" />
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom shadow-sm mb-3 justify-content-center" style="background-color: #e9f5ff;">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold text-primary" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="fas fa-tooth me-2"></i>Sonrisa Plena
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 justify-content-center">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (User.IsInRole("Administrador"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Pacientes" asp-action="Index">
+                                        <i class="fas fa-user-injured me-1"></i> Pacientes
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Odontologoes" asp-action="Index">
+                                        <i class="fas fa-user-md me-1"></i> Odontólogos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Turnoes" asp-action="Index">
+                                        <i class="fas fa-calendar-check me-1"></i> Turnos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Tratamientoes" asp-action="Index">
+                                        <i class="fas fa-tooth me-1"></i> Tratamientos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="PlanTratamientoes" asp-action="Index">
+                                        <i class="fas fa-notes-medical me-1"></i> Planes de tratamiento
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="PasoPlanes" asp-action="Index">
+                                        <i class="fas fa-tasks me-2"></i>Pasos plan de tratamiento
+                                    </a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Recepcionista"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Pacientes" asp-action="Index">
+                                        <i class="fas fa-user-injured me-1"></i> Pacientes
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Turnoes" asp-action="Index">
+                                        <i class="fas fa-calendar-check me-1"></i> Turnos
+                                    </a>
+                                </li>
+                            }
+                            else if (User.IsInRole("Odontologo"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Turnoes" asp-action="Index">
+                                        <i class="fas fa-calendar-check me-1"></i> Mis Turnos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="Tratamientoes" asp-action="Index">
+                                        <i class="fas fa-tooth me-1"></i> Tratamientos
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="PlanTratamientoes" asp-action="Index">
+                                        <i class="fas fa-notes-medical me-1"></i> Planes de tratamiento
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-controller="PasoPlanes" asp-action="Index">
+                                        <i class="fas fa-tasks me-2"></i>Pasos plan de tratamiento
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger text-white">
+                                        <i class="fas fa-sign-out-alt me-1"></i> Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">
+                                    <i class="fas fa-sign-in-alt me-1"></i> Iniciar sesión
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <small>&copy; @DateTime.Now.Year - Sonrisa Plena</small>
+            <div>
+                <a asp-controller="Home" asp-action="Privacy">Privacidad</a>
+                <a href="#">Términos</a>
+                <a href="#">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

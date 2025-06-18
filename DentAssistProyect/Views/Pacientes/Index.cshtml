@@ -1,0 +1,193 @@
+﻿@model IEnumerable<DentAssistProyect.Models.Entities.Paciente>
+
+@{
+    ViewData["Title"] = "Gestión de Pacientes";
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0"><i class="fas fa-user-injured me-2"></i>Pacientes</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> Nuevo Paciente
+        </a>
+    </div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white py-2 px-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-white"><i class="fas fa-list me-2"></i>Listado de Pacientes</h5>
+                <div class="d-flex">
+                    <button id="sortButton" class="btn btn-sm btn-outline-light me-2" title="Ordenar A-Z/Z-A">
+                        <i class="fas fa-sort-alpha-down"></i>
+                    </button>
+                    <div class="input-group input-group-sm" style="width: 180px;">
+                        <input type="text" class="form-control" placeholder="Buscar..." id="searchInput">
+                        <button class="btn btn-outline-light" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="fas fa-user me-1"></i>Nombre</th>
+                            <th><i class="fas fa-id-card me-1"></i>RUT</th>
+                            <th><i class="fas fa-phone me-1"></i>Teléfono</th>
+                            <th><i class="fas fa-envelope me-1"></i>Email</th>
+                            <th><i class="fas fa-map-marker-alt me-1"></i>Dirección</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="data-row">
+                                <td class="align-middle">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                                <td class="align-middle">@Html.DisplayFor(modelItem => item.Rut)</td>
+                                <td class="align-middle">@Html.DisplayFor(modelItem => item.Telefono)</td>
+                                <td class="align-middle">@Html.DisplayFor(modelItem => item.Email)</td>
+                                <td class="align-middle">@Html.DisplayFor(modelItem => item.Direccion)</td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info" title="Detalles">
+                                            <i class="fas fa-eye text-white"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="small text-muted" id="pageInfo">
+                    Mostrando <span id="startItem">1</span> a <span id="endItem">10</span> de <span id="totalItems">@Model.Count()</span> registros
+                </div>
+                <div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm mb-0" id="paginationControls">
+                            <li class="page-item disabled" id="prevButton">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                            </li>
+                            <li class="page-item disabled" id="nextButton">
+                                <a class="page-link" href="#" aria-disabled="true">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            const rowsPerPage = 10;
+            const allRows = $(".data-row");
+            const totalRows = allRows.length;
+            let currentPage = 1;
+            const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+            updatePagination();
+
+            function showPage(page) {
+                allRows.hide();
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+
+                allRows.slice(start, end).show();
+
+                $("#startItem").text(start + 1);
+                $("#endItem").text(Math.min(end, totalRows));
+                $("#totalItems").text(totalRows);
+
+                $("#prevButton").toggleClass("disabled", page === 1);
+                $("#nextButton").toggleClass("disabled", page === totalPages);
+
+                currentPage = page;
+            }
+
+            function updatePagination() {
+                const pagination = $("#paginationControls");
+
+                $(".page-number").remove();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageItem = $(`<li class="page-item page-number ${i === 1 ? 'active' : ''}">
+                        <a class="page-link" href="#">${i}</a>
+                    </li>`);
+
+                    pageItem.insertBefore("#nextButton");
+                }
+
+                showPage(1);
+            }
+
+            $(document).on("click", ".page-number a", function(e) {
+                e.preventDefault();
+                const page = parseInt($(this).text());
+                $(".page-number").removeClass("active");
+                $(this).parent().addClass("active");
+                showPage(page);
+            });
+
+            $("#prevButton a").click(function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    $(".page-number").removeClass("active");
+                    $(`.page-number:eq(${currentPage - 2})`).addClass("active");
+                    showPage(currentPage - 1);
+                }
+            });
+
+            $("#nextButton a").click(function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    $(".page-number").removeClass("active");
+                    $(`.page-number:eq(${currentPage})`).addClass("active");
+                    showPage(currentPage + 1);
+                }
+            });
+
+            $("#searchInput").on("keyup", function() {
+                const value = $(this).val().toLowerCase();
+                $(".data-row:visible").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            let ascending = true;
+            $("#sortButton").click(function() {
+                const visibleRows = $(".data-row:visible").get();
+                ascending = !ascending;
+
+                $(this).find('i').toggleClass('fa-sort-alpha-down fa-sort-alpha-up');
+
+                visibleRows.sort(function(a, b) {
+                    const nameA = $(a).find('td:first').text().toUpperCase();
+                    const nameB = $(b).find('td:first').text().toUpperCase();
+
+                    return ascending
+                        ? nameA.localeCompare(nameB)
+                        : nameB.localeCompare(nameA);
+                });
+
+                $.each(visibleRows, function(index, row) {
+                    $("#tableBody").append(row);
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Política de Privacidad";
+}
+<div class="container py-4">
+    <h1 class="mb-4"><i class="fas fa-shield-alt me-2"></i>@ViewData["Title"]</h1>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0 text-white"><i class="fas fa-info-circle me-2"></i>Información General</h5>
+        </div>
+        <div class="card-body">
+            <p>En <strong>Sonrisa Plena</strong>, nos comprometemos a proteger y respetar su privacidad. Esta política explica cómo recopilamos, usamos y protegemos la información personal que nos proporciona.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0 text-white"><i class="fas fa-database me-2"></i>Datos que Recopilamos</h5>
+        </div>
+        <div class="card-body">
+            <p>Podemos recopilar y procesar los siguientes datos:</p>
+            <ul>
+                <li>Información de contacto (nombre, email, teléfono)</li>
+                <li>Datos demográficos (edad, género)</li>
+                <li>Historial médico y dental</li>
+                <li>Información de pagos y facturación</li>
+                <li>Registros de citas y tratamientos</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0 text-white"><i class="fas fa-lock me-2"></i>Cómo Usamos Sus Datos</h5>
+        </div>
+        <div class="card-body">
+            <p>Utilizamos su información para:</p>
+            <ul>
+                <li>Gestionar citas y tratamientos</li>
+                <li>Proveer atención médica personalizada</li>
+                <li>Procesar pagos y facturación</li>
+                <li>Enviar recordatorios de citas</li>
+                <li>Mejorar nuestros servicios</li>
+                <li>Cumplir con obligaciones legales</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0 text-white"><i class="fas fa-share-square me-2"></i>Compartición de Datos</h5>
+        </div>
+        <div class="card-body">
+            <p>Su información será tratada con confidencialidad y solo podrá ser compartida con:</p>
+            <ul>
+                <li>Personal médico autorizado</li>
+                <li>Proveedores de seguros (cuando aplique)</li>
+                <li>Autoridades sanitarias (cuando sea requerido por ley)</li>
+            </ul>
+            <p class="mt-3">No vendemos ni compartimos sus datos con fines comerciales.</p>
+        </div>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0 text-white"><i class="fas fa-shield-virus me-2"></i>Seguridad de Datos</h5>
+        </div>
+        <div class="card-body">
+            <p>Implementamos medidas técnicas y organizativas para proteger sus datos personales:</p>
+            <ul>
+                <li>Encriptación de datos sensibles</li>
+                <li>Acceso restringido al personal autorizado</li>
+                <li>Protocolos de seguridad informática</li>
+                <li>Copias de seguridad periódicas</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0 text-white"><i class="fas fa-user-edit me-2"></i>Sus Derechos</h5>
+        </div>
+        <div class="card-body">
+            <p>Usted tiene derecho a:</p>
+            <ul>
+                <li>Acceder a sus datos personales</li>
+                <li>Solicitar corrección de información incorrecta</li>
+                <li>Solicitar eliminación de sus datos (cuando aplicable)</li>
+                <li>Oponerse al procesamiento de sus datos</li>
+                <li>Solicitar una copia de su información</li>
+            </ul>
+            <p class="mt-3">Para ejercer estos derechos, contáctenos a través de nuestro formulario de contacto.</p>
+        </div>
+    </div>
+
+    <div class="alert alert-info mt-4">
+        <h5><i class="fas fa-calendar-check me-2"></i>Actualizaciones de la Política</h5>
+        <p>Esta política puede actualizarse periódicamente. La versión más reciente siempre estará disponible en nuestro sitio web.</p>
+        <p class="mb-0"><strong>Última actualización:</strong> @DateTime.Now.ToString("dd/MM/yyyy")</p>
+    </div>
+</div>

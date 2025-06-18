@@ -1,0 +1,118 @@
+﻿@model DentAssistProyect.Models.Entities.Turno
+
+@{
+    ViewData["Title"] = "Nuevo Turno";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0"><i class="far fa-calendar-alt me-2"></i>Programar Nuevo Turno</h4>
+                        <a asp-action="Index" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i> Volver
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="FechaHora" class="form-label fw-bold">Fecha y Hora</label>
+                            <input asp-for="FechaHora" class="form-control" type="datetime-local" required />
+                            <span asp-validation-for="FechaHora" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DuracionMinutos" class="form-label fw-bold">Duración (minutos)</label>
+                            <input asp-for="DuracionMinutos" class="form-control" type="number" min="15" max="240" required />
+                            <span asp-validation-for="DuracionMinutos" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Estado" class="form-label fw-bold">Estado</label>
+                            <select asp-for="Estado" class="form-select" required>
+                                <option value="">Seleccione un estado...</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Confirmado">Confirmado</option>
+                                <option value="Cancelado">Cancelado</option>
+                                <option value="Completado">Completado</option>
+                            </select>
+                            <span asp-validation-for="Estado" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PacienteId" class="form-label fw-bold">Paciente</label>
+                            <select asp-for="PacienteId" class="form-select" asp-items="ViewBag.PacienteId" required>
+                                <option value="">Seleccione un paciente...</option>
+                            </select>
+                            <span asp-validation-for="PacienteId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="OdontologoId" class="form-label fw-bold">Odontólogo</label>
+                            <select asp-for="OdontologoId" class="form-select" asp-items="ViewBag.OdontologoId" required>
+                                <option value="">Seleccione un odontólogo...</option>
+                            </select>
+                            <span asp-validation-for="OdontologoId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save me-2"></i>Programar Turno
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var fechaHoraInput = document.getElementById("FechaHora");
+            if (fechaHoraInput) {
+                var now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+                now.setSeconds(0);
+                now.setMilliseconds(0);
+                fechaHoraInput.min = now.toISOString().slice(0, 16);
+
+                if (!fechaHoraInput.value) {
+                    var defaultTime = new Date(now);
+                    defaultTime.setMinutes(defaultTime.getMinutes() + 30 - (defaultTime.getMinutes() % 30));
+                    fechaHoraInput.value = defaultTime.toISOString().slice(0, 16);
+                }
+            }
+        });
+    </script>
+}

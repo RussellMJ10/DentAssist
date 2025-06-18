@@ -1,0 +1,247 @@
+﻿@model IEnumerable<DentAssistProyect.Models.Entities.Turno>
+
+@{
+    ViewData["Title"] = "Gestión de Turnos";
+
+    string GetEstadoBadgeClass(DentAssistProyect.Models.Enums.EstadoTurno estado)
+    {
+        return estado switch
+        {
+            DentAssistProyect.Models.Enums.EstadoTurno.Confirmado => "bg-success",
+            DentAssistProyect.Models.Enums.EstadoTurno.Pendiente => "bg-warning text-dark",
+            DentAssistProyect.Models.Enums.EstadoTurno.Cancelado => "bg-danger",
+            DentAssistProyect.Models.Enums.EstadoTurno.Realizado => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0"><i class="far fa-calendar-alt me-2"></i>Turnos</h1>
+        <a asp-action="Create" class="btn btn-primary">
+            <i class="fas fa-plus-circle me-1"></i> Nuevo Turno
+        </a>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white py-2 px-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 text-white"><i class="fas fa-calendar-alt me-2"></i>Turnos</h5>
+                <div class="d-flex">
+                    <button id="sortButton" class="btn btn-sm btn-outline-light me-2" title="Ordenar por paciente">
+                        <i class="fas fa-sort-alpha-down"></i>
+                    </button>
+                    <div class="input-group input-group-sm" style="width: 180px;">
+                        <input type="text" class="form-control" placeholder="Buscar..." id="searchInput">
+                        <button class="btn btn-outline-light" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th><i class="far fa-clock me-2"></i>Fecha y Hora</th>
+                            <th><i class="fas fa-hourglass-half me-2"></i>Duración</th>
+                            <th><i class="fas fa-clipboard-check me-2"></i>Estado</th>
+                            <th><i class="fas fa-user-injured me-2"></i>Paciente</th>
+                            <th><i class="fas fa-user-md me-2"></i>Odontólogo</th>
+                            <th class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    @item.FechaHora.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.DuracionMinutos) min
+                                </td>
+                                <td class="align-middle">
+                                    <span class="badge @GetEstadoBadgeClass(item.Estado)">
+                                        @item.Estado.ToString()
+                                    </span>
+                                </td>
+                                <td class="align-middle paciente-nombre">
+                                    @Html.DisplayFor(modelItem => item.Paciente.Nombre)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.Odontologo.Matricula)
+                                </td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info" title="Detalles">
+                                            <i class="fas fa-eye text-white"></i>
+                                        </a>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" title="Eliminar">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="small text-muted">
+                    <span id="showingText">Mostrando 0 de @Model.Count() turnos</span>
+                </div>
+                <div>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination pagination-sm mb-0" id="paginationControls">
+                            <li class="page-item disabled" id="prevButton">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                            </li>
+                            <li class="page-item disabled" id="nextButton">
+                                <a class="page-link" href="#" aria-disabled="true">Siguiente</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function(){
+            const rowsPerPage = 10;
+            let allRows = $("#tableBody tr");
+            let totalRows = allRows.length;
+            let currentPage = 1;
+            let totalPages = Math.ceil(totalRows / rowsPerPage);
+            let ascending = true;
+
+            updatePagination();
+
+            function showPage(page) {
+                allRows.hide();
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+
+                allRows.slice(start, end).show();
+
+                $("#prevButton").toggleClass("disabled", page === 1);
+                $("#nextButton").toggleClass("disabled", page === totalPages);
+
+                $(".page-number").removeClass("active");
+                $(`.page-number[data-page='${page}']`).addClass("active");
+
+                currentPage = page;
+
+                const showingStart = start + 1;
+                const showingEnd = Math.min(end, totalRows);
+                $("#showingText").text(`Mostrando ${showingStart}-${showingEnd} de ${totalRows} turnos`);
+            }
+
+            function updatePagination() {
+                const pagination = $("#paginationControls");
+
+                $(".page-number, .ellipsis").remove();
+
+                const maxVisiblePages = 5;
+                let startPage = 1;
+                let endPage = totalPages;
+
+                if (totalPages > maxVisiblePages) {
+                    startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+                    endPage = startPage + maxVisiblePages - 1;
+
+                    if (endPage > totalPages) {
+                        endPage = totalPages;
+                        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                    }
+                }
+
+                if (startPage > 1) {
+                    $('<li class="page-item disabled ellipsis"><a class="page-link" href="#">...</a></li>').insertBefore("#nextButton");
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageItem = $(`<li class="page-item page-number ${i === 1 ? 'active' : ''}" data-page="${i}">
+                                            <a class="page-link" href="#">${i}</a>
+                                        </li>`);
+                    pageItem.insertBefore("#nextButton");
+                }
+
+                if (endPage < totalPages) {
+                    $('<li class="page-item disabled ellipsis"><a class="page-link" href="#">...</a></li>').insertBefore("#nextButton");
+                }
+
+                showPage(currentPage);
+            }
+
+            $(document).on("click", ".page-number a", function(e) {
+                e.preventDefault();
+                const page = parseInt($(this).text());
+                showPage(page);
+            });
+
+            $("#prevButton a").click(function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    showPage(currentPage - 1);
+                }
+            });
+
+            $("#nextButton a").click(function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    showPage(currentPage + 1);
+                }
+            });
+
+            $("#searchInput").on("keyup", function() {
+                const value = $(this).val().toLowerCase();
+                allRows = $("#tableBody tr").filter(function() {
+                    const isVisible = $(this).text().toLowerCase().indexOf(value) > -1;
+                    $(this).toggle(isVisible);
+                    return isVisible;
+                });
+
+                totalRows = allRows.length;
+                totalPages = Math.ceil(totalRows / rowsPerPage);
+                currentPage = 1;
+
+                updatePagination();
+            });
+
+            $("#sortButton").click(function() {
+                const visibleRows = allRows.get();
+                ascending = !ascending;
+
+                $(this).find('i').toggleClass('fa-sort-alpha-down fa-sort-alpha-up');
+
+                visibleRows.sort(function(a, b) {
+                    const nameA = $(a).find('.paciente-nombre').text().toUpperCase();
+                    const nameB = $(b).find('.paciente-nombre').text().toUpperCase();
+
+                    return ascending
+                        ? nameA.localeCompare(nameB)
+                        : nameB.localeCompare(nameA);
+                });
+
+                $.each(visibleRows, function(index, row) {
+                    $("#tableBody").append(row);
+                });
+
+                allRows = $("#tableBody tr");
+                showPage(currentPage);
+            });
+        });
+    </script>
+}

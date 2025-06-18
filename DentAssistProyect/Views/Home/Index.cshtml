@@ -1,0 +1,181 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Inicio - Sonrisa Plena";
+    var user = Context.User;
+}
+
+<div class="container-fluid px-0 bg-light">
+    <div class="bg-primary text-white py-5">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3 text-white">Bienvenido a Sonrisa Plena</h1>
+            <p class="lead mb-4">Sistema integral de gestión odontológica</p>
+            <div class="d-flex justify-content-center gap-3">
+                @if (user.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Pacientes" asp-action="Index" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-user-injured me-2"></i>Pacientes
+                    </a>
+                    <a asp-controller="Turnoes" asp-action="Index" class="btn btn-outline-light btn-lg px-4">
+                        <i class="fas fa-calendar-alt me-2"></i>Turnos
+                    </a>
+                }
+                else
+                {
+                    <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-light btn-lg px-4">
+                        <i class="fas fa-sign-in-alt me-2"></i>Iniciar Sesión
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        @if (user.IsInRole("Administrador"))
+        {
+            <div class="card border-primary mb-4 border-top-0 border-end-0 border-bottom-0 border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-user-shield fa-2x text-primary me-3"></i>
+                        <h2 class="mb-0"><i class="fas fa-crown me-2"></i>Panel del Administrador</h2>
+                    </div>
+                    <p class="lead text-muted">Gestión completa del sistema odontológico</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-users fa-2x text-primary mb-3"></i>
+                                    <h4>Gestión de Pacientes</h4>
+                                    <p class="text-muted">Administra toda la información de los pacientes registrados.</p>
+                                    <a asp-controller="Pacientes" asp-action="Index" class="btn btn-sm btn-outline-primary">Acceder</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-user-md fa-2x text-primary mb-3"></i>
+                                    <h4>Odontólogos</h4>
+                                    <p class="text-muted">Administra el personal clínico y sus especialidades.</p>
+                                    <a asp-controller="Odontologoes" asp-action="Index" class="btn btn-sm btn-outline-primary">Acceder</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-calendar-check fa-2x text-primary mb-3"></i>
+                                    <h4>Turnos</h4>
+                                    <p class="text-muted">Visualiza y gestiona todos los turnos agendados.</p>
+                                    <a asp-controller="Turnoes" asp-action="Index" class="btn btn-sm btn-outline-primary">Acceder</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-procedures fa-2x text-primary mb-3"></i>
+                                    <h4>Tratamientos</h4>
+                                    <p class="text-muted">Configura los procedimientos disponibles en la clínica.</p>
+                                    <a asp-controller="Tratamientoes" asp-action="Index" class="btn btn-sm btn-outline-primary">Acceder</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (user.IsInRole("Recepcionista"))
+        {
+            <div class="card border-success mb-4 border-top-0 border-end-0 border-bottom-0 border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-headset fa-2x text-success me-3"></i>
+                        <h2 class="mb-0"><i class="fas fa-user-tie me-2"></i>Panel de Recepción</h2>
+                    </div>
+                    <p class="lead text-muted">Herramientas para la gestión de pacientes y turnos</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-user-plus fa-2x text-success mb-3"></i>
+                                    <h4>Registro de Pacientes</h4>
+                                    <p class="text-muted">Registra nuevos pacientes o actualiza sus datos.</p>
+                                    <a asp-controller="Pacientes" asp-action="Create" class="btn btn-sm btn-outline-success">Nuevo Paciente</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-calendar-plus fa-2x text-success mb-3"></i>
+                                    <h4>Gestión de Turnos</h4>
+                                    <p class="text-muted">Agenda, reprograma o cancela turnos.</p>
+                                    <a asp-controller="Turnoes" asp-action="Create" class="btn btn-sm btn-outline-success">Nuevo Turno</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (user.IsInRole("Odontologo"))
+        {
+            <div class="card border-info mb-4 border-top-0 border-end-0 border-bottom-0 border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-tooth fa-2x text-info me-3"></i>
+                        <h2 class="mb-0"><i class="fas fa-user-md me-2"></i>Panel Odontológico</h2>
+                    </div>
+                    <p class="lead text-muted">Recursos clínicos para la atención de pacientes</p>
+
+                    <div class="row mt-4">
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-calendar-day fa-2x text-info mb-3"></i>
+                                    <h4>Mis Turnos</h4>
+                                    <p class="text-muted">Consulta tu agenda de turnos programados.</p>
+                                    <a asp-controller="Turnoes" asp-action="Index" class="btn btn-sm btn-outline-info">Ver Agenda</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-file-medical fa-2x text-info mb-3"></i>
+                                    <h4>Tratamientos</h4>
+                                    <p class="text-muted">Consulta los tratamientos disponibles.</p>
+                                    <a asp-controller="Tratamientoes" asp-action="Index" class="btn btn-sm btn-outline-info">Ver Tratamientos</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-tasks fa-2x text-info mb-3"></i>
+                                    <h4>Planes de Tratamiento</h4>
+                                    <p class="text-muted">Gestiona planes para tus pacientes.</p>
+                                    <a asp-controller="PlanTratamientoes" asp-action="Index" class="btn btn-sm btn-outline-info">Ver Planes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else if (user.Identity.IsAuthenticated)
+        {
+            <div class="card border-warning text-center py-5">
+                <div class="card-body">
+                    <i class="fas fa-exclamation-triangle fa-4x text-warning mb-4"></i>
+                    <h2>Acceso Limitado</h2>
+                    <p class="lead text-muted">Tu cuenta no tiene roles asignados</p>
+                    <p>Por favor contacta al administrador del sistema para asignarte los permisos correspondientes.</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

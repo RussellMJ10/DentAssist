@@ -1,0 +1,108 @@
+﻿@model DentAssistProyect.Models.Entities.PasoPlan
+
+@{
+    ViewData["Title"] = "Nuevo Paso de Plan";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0 text-white"><i class="fas fa-tasks me-2"></i>Agregar Paso al Plan</h4>
+                        <a asp-action="Index" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-arrow-left me-1"></i> Volver
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" class="needs-validation" novalidate>
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Orden" class="form-label fw-bold">Número de Orden</label>
+                            <input asp-for="Orden" class="form-control" type="number" min="1" required />
+                            <span asp-validation-for="Orden" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Descripcion" class="form-label fw-bold">Descripción del Paso</label>
+                            <textarea asp-for="Descripcion" class="form-control" rows="3" required></textarea>
+                            <span asp-validation-for="Descripcion" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="FechaEstimada" class="form-label fw-bold">Fecha Estimada</label>
+                            <input asp-for="FechaEstimada" class="form-control" type="date" required />
+                            <span asp-validation-for="FechaEstimada" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Estado" class="form-label fw-bold">Estado Actual</label>
+                            <select asp-for="Estado" class="form-select" required>
+                                <option value="">Seleccione un estado...</option>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Realizado">Realizado</option>
+                                <option value="Cancelado">Cancelado</option>
+                            </select>
+                            <span asp-validation-for="Estado" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PlanTratamientoId" class="form-label fw-bold">Plan de Tratamiento</label>
+                            <select asp-for="PlanTratamientoId" class="form-select" asp-items="ViewBag.PlanTratamientoId" required>
+                                <option value="">Seleccione un plan de tratamiento...</option>
+                            </select>
+                            <span asp-validation-for="PlanTratamientoId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TratamientoId" class="form-label fw-bold">Tratamiento Asociado</label>
+                            <select asp-for="TratamientoId" class="form-select" asp-items="ViewBag.TratamientoId" required>
+                                <option value="">Seleccione un tratamiento...</option>
+                            </select>
+                            <span asp-validation-for="TratamientoId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save me-2"></i>Guardar Paso
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-times me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        (function () {
+            'use strict'
+
+            var forms = document.querySelectorAll('.needs-validation')
+
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+
+        document.getElementById("FechaEstimada").min = new Date().toISOString().split("T")[0];
+    </script>
+}
