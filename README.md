@@ -157,7 +157,7 @@ DentAssist Pro es un sistema de gestión odontológica diseñado para:
 
 📷 *Pantalla de Login:*  
 
-
+![Captura de pantalla 2025-06-17 233645](https://github.com/user-attachments/assets/62a54527-543a-4465-b50e-2626c0930563)
 ---
 
 ### 3. Módulos Principales
