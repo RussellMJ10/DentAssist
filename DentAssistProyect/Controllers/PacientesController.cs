@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DentAssistProyect.Data;
 using DentAssistProyect.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Data.SqlClient; // Añade este using para SqlException
+using Microsoft.Data.SqlClient;
+using DentAssistProyect.Models.Data; // Añade este using para SqlException
 
 namespace DentAssistProyect.Controllers
 {

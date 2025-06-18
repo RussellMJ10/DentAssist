@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\Programas\\Proyectos\\Visual Studio 2022\\Net\\DentAssistProyect\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FAACE87A-16BD-4F65-9273-A3D075D974FC}|DentAssistProyect\\DentAssistProyect.csproj|d:\\programas\\proyectos\\visual studio 2022\\net\\dentassistproyect\\dentassistproyect\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{FAACE87A-16BD-4F65-9273-A3D075D974FC}|DentAssistProyect\\DentAssistProyect.csproj|solutionrelative:dentassistproyect\\views\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FAACE87A-16BD-4F65-9273-A3D075D974FC}|DentAssistProyect\\DentAssistProyect.csproj|d:\\programas\\proyectos\\visual studio 2022\\net\\dentassistproyect\\dentassistproyect\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{FAACE87A-16BD-4F65-9273-A3D075D974FC}|DentAssistProyect\\DentAssistProyect.csproj|solutionrelative:dentassistproyect\\wwwroot\\css\\site.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
@@ -19,12 +23,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "D:\\Programas\\Proyectos\\Visual Studio 2022\\Net\\DentAssistProyect\\DentAssistProyect\\Views\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "DentAssistProyect\\Views\\Account\\Register.cshtml",
+              "ToolTip": "D:\\Programas\\Proyectos\\Visual Studio 2022\\Net\\DentAssistProyect\\DentAssistProyect\\Views\\Account\\Register.cshtml",
+              "RelativeToolTip": "DentAssistProyect\\Views\\Account\\Register.cshtml",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAEAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-06-18T03:11:06.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "site.css",
               "DocumentMoniker": "D:\\Programas\\Proyectos\\Visual Studio 2022\\Net\\DentAssistProyect\\DentAssistProyect\\wwwroot\\css\\site.css",
               "RelativeDocumentMoniker": "DentAssistProyect\\wwwroot\\css\\site.css",
               "ToolTip": "D:\\Programas\\Proyectos\\Visual Studio 2022\\Net\\DentAssistProyect\\DentAssistProyect\\wwwroot\\css\\site.css",
               "RelativeToolTip": "DentAssistProyect\\wwwroot\\css\\site.css",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAABoAAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAADAAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2025-06-17T00:29:07.405Z",
               "EditorCaption": ""

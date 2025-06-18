@@ -1,7 +1,7 @@
-using DentAssistProyect.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.UI;
+using DentAssistProyect.Models.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

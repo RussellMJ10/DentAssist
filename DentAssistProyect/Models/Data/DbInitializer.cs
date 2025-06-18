@@ -1,10 +1,9 @@
-﻿using DentAssistProyect.Data;
-using DentAssistProyect.Models.Entities;
+﻿using DentAssistProyect.Models.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;
 
-namespace DentAssistProyect.Data
+namespace DentAssistProyect.Models.Data
 {
     public static class DbInitializer
     {

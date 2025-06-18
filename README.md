@@ -1,3 +1,4 @@
+
 # 🦷 DentAssist – Sistema de Gestión Clínica para "Sonrisa Plena"
 
 DentAssist es una aplicación web desarrollada para digitalizar la gestión de la clínica dental "Sonrisa Plena", ubicada en una ciudad de tamaño medio. Este sistema permite gestionar de forma eficiente pacientes, turnos, tratamientos y planes clínicos personalizados, con acceso diferenciado por roles.
@@ -26,30 +27,29 @@ DentAssistProject/
 ├── Controllers/
 ├── Migrations/
 ├── Models/
-│ ├── Attributes/
-│ ├── Data/
-│ ├── Entities/
-│ ├── Enums/
-│ ├── ErrorViewModels.cs
-│ ├── LoginViewModels.cs
-│ ├── RegisterViewModels.cs
+│   ├── Attributes/
+│   ├── Data/
+│   ├── Entities/
+│   ├── Enums/
+│   ├── ErrorViewModels.cs
+│   ├── LoginViewModels.cs
+│   ├── RegisterViewModels.cs
 ├── Views/
-│ ├── Account/
-│ ├── Home/
-│ ├── Odontologos/
-│ ├── Pacientes/
-│ ├── PasoPlanes/
-│ ├── PlanTratamientos/
-│ ├── Shared/
-│ ├── Tratamientos/
-│ ├── Turnos/
-│ ├── _ViewImports.cshtml
-│ ├── _ViewStart.cshtml
+│   ├── Account/
+│   ├── Home/
+│   ├── Odontologos/
+│   ├── Pacientes/
+│   ├── PasoPlanes/
+│   ├── PlanTratamientos/
+│   ├── Shared/
+│   ├── Tratamientos/
+│   ├── Turnos/
+│   ├── _ViewImports.cshtml
+│   ├── _ViewStart.cshtml
 ├── appsettings.json
 ├── Program.cs
 └── ScaffoldingReadMe.txt
 ```
-
 
 ### Descripción de carpetas principales:
 
@@ -81,17 +81,20 @@ cd dentassist
 Update-Database
 ```
 
-4. Ejecuta la aplicación desde visualStudio
+4. Ejecuta la aplicación desde Visual Studio.
 
 Accede a la aplicación desde tu navegador en: `https://localhost:7176`
 
+**Usuario Administrador:** `admin@sonrisaplena.cl`  
+**Contraseña Administrador:** `Admin123!`
+
 ## 👥 Roles y Permisos
 
-| Rol           | Funcionalidades Principales |
-|---------------|-----------------------------|
-| **Administrador** | ABM de odontólogos, tratamientos, configuración general |
-| **Recepcionista** | ABM de pacientes, asignación de turnos, visualización de agenda |
-| **Odontólogo**    | Consulta de su agenda, historial clínico de pacientes, creación de planes de tratamiento |
+| Rol            | Funcionalidades Principales                                 |
+|----------------|-------------------------------------------------------------|
+| Administrador  | ABM de odontólogos, tratamientos, configuración general     |
+| Recepcionista  | ABM de pacientes, asignación de turnos, visualización de agenda |
+| Odontólogo     | Consulta de su agenda, historial clínico, planes de tratamiento |
 
 ## ✅ Funcionalidades Implementadas
 
@@ -128,11 +131,95 @@ Accede a la aplicación desde tu navegador en: `https://localhost:7176`
 - Restricción de vistas según el rol autenticado
 - Autenticación mediante ASP.NET Identity
 
-## 📄 Manual de Usuario
+## 📘 Manual de Usuario
 
-- Los **administradores** gestionan los odontólogos, tratamientos y parámetros generales desde el panel de configuración.
-- Los **recepcionistas** crean y editan pacientes, asignan turnos desde una interfaz simplificada y acceden a la agenda semanal.
-- Los **odontólogos** acceden a su agenda, historial clínico y pueden crear planes detallados para cada paciente, incluyendo exportación PDF.
+### Versión 1.0  
+**Dirigido a:** Personal administrativo, odontólogos y recepcionistas.
+
+---
+
+### 1. Introducción
+
+DentAssist Pro es un sistema de gestión odontológica diseñado para:
+- ✔ Registrar pacientes y turnos.
+- ✔ Gestionar tratamientos y planes odontológicos.
+- ✔ Asignar odontólogos y hacer seguimiento de historias clínicas.
+
+---
+
+### 2. Acceso al Sistema
+
+#### 2.1 Iniciar Sesión
+2.2. Complete los siguientes campos:
+   - **Usuario**: Correo electrónico registrado
+   - **Contraseña**: La proporcionada por el administrador
+2.3. Haga clic en **"Iniciar sesión"**
+
+📷 *Pantalla de Login:*  
+
+
+---
+
+### 3. Módulos Principales
+
+#### 3.1 Gestión de Pacientes
+**Cómo agregar un nuevo paciente:**
+- Navegue a `Pacientes → Nuevo Paciente`
+- Complete los campos: Nombre, teléfono, email, antecedentes médicos.
+- Guarde los datos.
+
+**Ejemplo:**
+> Si el paciente Juan Pérez llega por primera vez, se registra con su DNI y se le asigna un historial.
+
+#### 3.2 Agendar Turnos
+- Vaya a `Turnos → Nuevo Turno`
+- Seleccione:
+  - Paciente (busque por nombre o DNI)
+  - Odontólogo asignado
+  - Fecha/hora y tipo de consulta
+- Confirme con **"Guardar"**
+
+```
+Turno creado:  
+- Paciente: María Gómez  
+- Fecha: 17/06/2025 - 10:00 AM  
+- Odontólogo: Dr. López  
+- Estado: Pendiente ✅
+```
+
+#### 3.3 Tratamientos y Planes
+**Crear un tratamiento:**
+- En `Tratamientos → Nuevo`, ingrese:
+  - Nombre (ej: "Carilla dental")
+  - Descripción y precio estimado
+- Asócielo a un paciente desde `Planes de Tratamiento`.
+
+---
+
+### 4. Funciones por Rol
+
+| Rol           | Acciones Permitidas                              |
+|---------------|--------------------------------------------------|
+| Recepcionista | Agendar turnos, registrar pacientes              |
+| Odontólogo    | Ver turnos, actualizar historias clínicas        |
+| Administrador | Gestionar usuarios, odontólogos y reportes       |
+
+---
+
+### 5. Solución de Problemas Comunes
+
+- ❌ **Error al guardar turnos**: Verifique que la fecha no esté ocupada.
+- ❌ **Paciente no aparece**: Confirme que esté registrado en el módulo de Pacientes.
+- ❌ **Acceso denegado**: Contacte al administrador para verificar sus permisos.
+
+---
+
+### 6. Soporte
+
+- 📧 Email: `soporte@dentassist.com`
+- 📞 Teléfono: `+1 234-567-8900`
+
+---
 
 ## 📁 Migraciones y Base de Datos
 

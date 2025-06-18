@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using DentAssistProyect.Data;
 using DentAssistProyect.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
+using DentAssistProyect.Models.Data;
 
 namespace DentAssistProyect.Controllers
 {

@@ -1,4 +1,4 @@
-﻿using DentAssistProyect.Data;
+﻿using DentAssistProyect.Models.Data;
 using DentAssistProyect.Models.Entities;
 using DentAssistProyect.Models.Enums;
 using Microsoft.AspNetCore.Authorization;

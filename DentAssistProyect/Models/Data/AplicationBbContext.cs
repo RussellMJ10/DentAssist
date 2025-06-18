@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using DentAssistProyect.Models.Entities;
 
-namespace DentAssistProyect.Data
+namespace DentAssistProyect.Models.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
