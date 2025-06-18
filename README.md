@@ -145,7 +145,7 @@ Update-Database
 
 ## 📖 Créditos
 
-Este proyecto fue desarrollado por el equipo de estudiantes de Ingeniería Informática para la asignatura de Desarrollo de Aplicaciones Web en el año 2025.
+Este proyecto fue desarrollado por el equipo de estudiantes de Ingeniería Informática para la asignatura de Programación .Net en el año 2025.
 
 ## 📚 Licencia
 
